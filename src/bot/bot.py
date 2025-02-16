@@ -8,7 +8,8 @@ from bot.definitions import TELEGRAM_TOKEN
 from bot.sql.sql import db_init
 
 # импорт роутеров
-import bot.handlers.profile as base_handlers
+import bot.handlers.profile_handler as base_handlers
+import bot.handlers.books_handler as books_handlers
 
 
 bot = Bot(token=TELEGRAM_TOKEN)
@@ -27,7 +28,8 @@ async def launch_bot():
     db_init()
 
     dp.include_routers(
-        base_handlers.router
+        base_handlers.router,
+        books_handlers.router
     )
 
     await bot.delete_webhook(drop_pending_updates=True)

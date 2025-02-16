@@ -1,3 +1,6 @@
+import json
+from ast import literal_eval
+
 from bot import errors
 from bot.sql.users import get_user_setting, set_user_setting
 
@@ -23,7 +26,7 @@ async def extract_books_data(text: str, user_id: int, clarify: bool = False):
 
 
     if clarify:
-        existing_data = await get_user_setting(user_id, "existing_books_data")
+        existing_data = literal_eval(str(await get_user_setting(user_id, "existing_books_data")))[0]
 
         # ... делаем запросы
         # заполняем/дополняем books_data
@@ -31,15 +34,14 @@ async def extract_books_data(text: str, user_id: int, clarify: bool = False):
         # raise errors.NeedToClarifyError
 
         # сохраняем данные в existing_books_data
-        await set_user_setting(user_id, "existing_books_data", books_data)
+        await set_user_setting(user_id, "existing_books_data", [books_data])
     else:
         # ... делаем запросы
         # ВАЖНО! Если вдруг данных недостаточно, мы не можем определить нужные нам обязательные данные, то тогда
         # raise errors.NeedToClarifyError
         # сохраняем данные в existing_books_data
-        await set_user_setting(user_id, "existing_books_data", books_data)
 
-
+        await set_user_setting(user_id, "existing_books_data", [books_data])
 
     return books_data
 

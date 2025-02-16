@@ -19,7 +19,3 @@ def convert_to_sqlite_string(messages: list | dict):
 
     return json.dumps(messages)
 
-
-def generate_key(k=10):
-    alphabet = string.ascii_lowercase + string.ascii_uppercase + string.digits
-    return ''.join(random.choices(alphabet, k=k))

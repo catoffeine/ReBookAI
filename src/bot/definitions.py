@@ -9,5 +9,6 @@ USERS = "users"
 DB_FILE = os.path.join(ROOT_DIR, 'database.db')
 
 BASE_USER_CONFIG = {
+    "existing_books_data": {},
     "some_setting": 0
 }
