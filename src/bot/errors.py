@@ -21,10 +21,5 @@ class CheckUserError(SQLiteQueryError):
 class GetUsersError(SQLiteQueryError):
     pass
 
-
-class CheckKeyError(SQLiteQueryError):
-    pass
-
-
-class GetKeysError(SQLiteQueryError):
+class NeedToClarifyError(BaseException):
     pass

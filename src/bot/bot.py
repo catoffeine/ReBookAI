@@ -8,7 +8,7 @@ from bot.definitions import TELEGRAM_TOKEN
 from bot.sql.sql import db_init
 
 # импорт роутеров
-import bot.handlers.base_handlers as base_handlers
+import bot.handlers.profile as base_handlers
 
 
 bot = Bot(token=TELEGRAM_TOKEN)
