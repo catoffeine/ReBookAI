@@ -37,13 +37,13 @@ async def write_answer(message: Message, text: str, user_id: int, state: FSMCont
 #_______________________
 # Обрабатываем текстовое сообщение
 #_______________________
-@router.message(F.text)
+@router.message(F.text, StateFilter(None))
 async def text_message_start(message: Message, state: FSMContext):
     text = message.text
     await write_answer(message, text, message.from_user.id, state)
 
 # Обрабатываем аудио сообщение
-@router.message(F.voice)
+@router.message(F.voice, StateFilter(None))
 async def voice_message_start(message: Message, bot: Bot, state: FSMContext):
     text = await audio_to_text(bot, message.voice.file_id)
     await write_answer(message, text, message.from_user.id, state)

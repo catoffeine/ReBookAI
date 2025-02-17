@@ -32,7 +32,6 @@ async def extract_books_data(text: str, user_id: int, clarify: bool = False):
         # заполняем/дополняем books_data
         # ВАЖНО! Если вдруг данных недостаточно, мы не можем определить нужные нам обязательные данные, то тогда
         # raise errors.NeedToClarifyError
-
         # сохраняем данные в existing_books_data
         await set_user_setting(user_id, "existing_books_data", [books_data])
     else:
