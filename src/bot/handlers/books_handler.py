@@ -22,6 +22,8 @@ async def write_answer(message: Message, text: str, user_id: int, state: FSMCont
         # как пример
         await message.answer("Уточните запрос")
         await state.set_state(BooksHandlerStates.clarify)
+    except errors.NoAvailableApis:
+        await message.answer("Сервер перегружен, подождите несколько секунд и попробуйте снова...")
     else:
         # здесь надо написать как будем отвечать, books возвращает нужные данные в каком-то из форматов
 
