@@ -7,6 +7,11 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 LOG_DIR = os.path.join(f'{ROOT_DIR}/', 'logfiles/')
 USERS = "users"
 DB_FILE = os.path.join(ROOT_DIR, 'database.db')
+APIS_PATH = os.path.join(ROOT_DIR, 'apis.txt')
+
+class ApiErrors:
+    RATELIMIT = 0
+    RESTRICTED = 1
 
 BASE_USER_CONFIG = {
     "existing_books_data": {},

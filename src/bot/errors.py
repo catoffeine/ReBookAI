@@ -23,3 +23,6 @@ class GetUsersError(SQLiteQueryError):
 
 class NeedToClarifyError(BaseException):
     pass
+
+class NoAvailableApis(BaseException):
+    pass
