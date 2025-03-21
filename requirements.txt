@@ -10,3 +10,6 @@ pandas==2.2.3
 pydub==0.25.1
 pytz==2025.1
 SpeechRecognition==3.14.1
+sentence-transformers==3.4.1
+rank-bm25==0.2.2
+faiss-cpu==1.10.0

@@ -93,11 +93,12 @@ async def voice_message_start(message: Message, bot: Bot, state: FSMContext):
         text = await audio_to_text(bot, message.voice.file_id)
     except errors.EmptyVoiceError:
         await message.answer("⚠️ Мы не смогли обнаружить текст в голосовом сообщений, пожалуйста, уточните ваш запрос.")
+        return
     except Exception:
         await message.answer("⚠️ Ошибка во время обработки голосового сообщения, попробуйте позже...")
         return
-
-    await write_answer(message, text, message.from_user.id, state)
+    else:
+        await write_answer(message, text, message.from_user.id, state)
 #_______________________
 
 
@@ -142,10 +143,11 @@ async def add_descriptions(callback: CallbackQuery):
         logger.error("error getting descriptions...")
         return
 
+    await callback.answer()
+
     try:
         full_books_data = await write_book_blurbs(current_books, current_user_request, user_id)
     except NoAvailableApis:
-        await callback.answer()
         await callback.message.edit_text("⚠️ Сервер перегружен, подождите несколько секунд и попробуйте снова... ",
                                          parse_mode=ParseMode.HTML, disable_web_page_preview=True)
         return
@@ -170,7 +172,6 @@ async def add_descriptions(callback: CallbackQuery):
 
         ans_text += "\n➖➖➖➖➖\n" if i < len(full_books_data) - 1 else ""
 
-    await callback.answer()
     await callback.message.edit_text(ans_text, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
 
     logger.info("add_descriptions end...")

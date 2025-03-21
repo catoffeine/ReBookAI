@@ -6,6 +6,7 @@ import speech_recognition as sr
 
 from bot import errors
 
+AudioSegment.converter = r"C:\ProgramData\chocolatey\lib\ffmpeg\tools\ffmpeg\bin\ffmpeg.exe"
 
 async def audio_to_text(bot: Bot, file_id: str) -> str:
     """
@@ -40,6 +41,7 @@ async def audio_to_text(bot: Bot, file_id: str) -> str:
                 except sr.UnknownValueError:
                     raise errors.EmptyVoiceError
                 except sr.RequestError as e:
+                    print("Exception while recognizing voice: {}".format(repr(e)))
                     raise errors.VoiceRecognitionError
 
         text = recognize()
