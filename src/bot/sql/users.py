@@ -133,9 +133,11 @@ async def set_user_setting(user: int, name: str, value: [str | int | float | lis
                 {where}
             '''
         elif type(value) is list:
+            in_execution = True
+            value = str(value)
             query = f'''
                 UPDATE {USERS}
-                SET settings = JSON_SET(settings, '$.{name}', "{str(value)}")
+                SET settings = JSON_SET(settings, '$.{name}', ?)
                 {where}
             '''
         else:

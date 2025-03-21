@@ -4,6 +4,8 @@ import sys
 from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.types import BotCommand
+
+from bot.books_core.RAG import setup_rag
 from bot.definitions import TELEGRAM_TOKEN
 from bot.sql.sql import db_init
 
@@ -17,11 +19,13 @@ bot = Bot(token=TELEGRAM_TOKEN)
 # Запуск бота
 async def launch_bot():
 
+    print("rag setup...")
+    await setup_rag()
+
     dp = Dispatcher(storage=MemoryStorage())
 
     commands = [
-        BotCommand(command="start", description="регистрация и приветствие"),
-        BotCommand(command="profile", description="профиль"),
+        BotCommand(command="start", description="регистрация и приветствие")
     ]
     await bot.set_my_commands(commands)
 

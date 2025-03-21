@@ -8,6 +8,7 @@ LOG_DIR = os.path.join(f'{ROOT_DIR}/', 'logfiles/')
 USERS = "users"
 DB_FILE = os.path.join(ROOT_DIR, 'database.db')
 APIS_PATH = os.path.join(ROOT_DIR, 'apis.txt')
+DATASET_PATH = os.path.join(ROOT_DIR, 'dataset.csv')
 
 class ApiErrors:
     RATELIMIT = 0

@@ -496,9 +496,22 @@ def create_dataset(dataset_path, csv_files_dir):
     combined.to_csv(dataset_path, index=False)
     print(f"dataset created successfully and saved to {dataset_path}")
 
+def combine_genres(dataset_path):
+    df = pd.read_csv("dataset.csv", sep=";", encoding="cp1251")
+
+    result = (
+        df.groupby(["title", "author", "age_limit", "writing_date", "volume", "images", "description", "reviews_count", "rating", "litres_url"], as_index=False).agg({
+            "genre": lambda x: ", ".join(set(x)),
+            "subgenre": lambda x: ", ".join(set(x))
+        })
+    )
+
+    result.to_csv("combined_dataset.csv", index=False, encoding="cp1251", sep=";")
+
 async def main():
-    await fetch_all()
-    create_dataset("dataset.csv", "books")
+    # await fetch_all()
+    # create_dataset("dataset.csv", "books")
+    combine_genres("dataset.csv")
 
 if __name__ == '__main__':
     asyncio.run(main())

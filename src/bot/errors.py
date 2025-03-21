@@ -26,3 +26,12 @@ class NeedToClarifyError(BaseException):
 
 class NoAvailableApis(BaseException):
     pass
+
+class GroqCriticalError(BaseException):
+    pass
+
+class VoiceRecognitionError(BaseException):
+    pass
+
+class EmptyVoiceError(BaseException):
+    pass

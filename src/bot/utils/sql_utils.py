@@ -10,7 +10,7 @@ def convert_to_sqlite_string(messages: list | dict):
                 convert_to_sqlite_string(messages[key])
             else:
                 messages[key] = messages[key].replace("'", "''")
-    else:
+    elif type(messages) == list:
         for i in range(len(messages)):
             if type(messages[i]) != str:
                 convert_to_sqlite_string(messages[i])

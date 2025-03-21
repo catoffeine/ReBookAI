@@ -9,3 +9,6 @@ logfiles
 *.docx
 books
 save_data.json
+temp
+combined_dataset.csv
+vector_store_saved

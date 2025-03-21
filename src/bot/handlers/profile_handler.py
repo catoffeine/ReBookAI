@@ -3,7 +3,7 @@ from typing import Dict, Any, Callable, Awaitable
 from aiogram import Router, BaseMiddleware
 from aiogram.enums import ParseMode
 from aiogram.filters import Command
-from aiogram.types import Message
+from aiogram.types import Message, CallbackQuery
 
 from bot.sql.users import check_if_user_exists, add_user
 
@@ -15,15 +15,17 @@ class UnregisteredMiddleware(BaseMiddleware):
 
     async def __call__(
             self,
-            handler: Callable[[Message, Dict[str, Any]], Awaitable[Any]],
-            event: Message,
+            handler: Callable[[Message | CallbackQuery, Dict[str, Any]], Awaitable[Any]],
+            event: Message | CallbackQuery,
             data: Dict[str, Any]
     ):
 
-        user_id = event.from_user.id
-        if not await check_if_user_exists(user_id) and event.text != "/start":
-            await event.answer("Вы должны зарегистрироваться прежде, чем использовать бота командой /start.")
-            return
+        if isinstance(event, Message):
+            user_id = event.from_user.id
+            # Check if the user is registered and not using /start
+            if not await check_if_user_exists(user_id) and event.text != "/start":
+                await event.answer("Вы должны зарегистрироваться прежде, чем использовать бота командой /start.")
+                return
 
         return await handler(event, data)
 
