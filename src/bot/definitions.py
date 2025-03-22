@@ -9,6 +9,7 @@ USERS = "users"
 DB_FILE = os.path.join(ROOT_DIR, 'database.db')
 APIS_PATH = os.path.join(ROOT_DIR, 'apis.txt')
 DATASET_PATH = os.path.join(ROOT_DIR, 'dataset.csv')
+FFMPEG_PATH = r"C:\ProgramData\chocolatey\lib\ffmpeg\tools\ffmpeg\bin\ffmpeg.exe"
 
 class ApiErrors:
     RATELIMIT = 0

@@ -3,6 +3,7 @@ from ast import literal_eval
 from aiogram import Router, Bot
 from aiogram import F
 from aiogram.enums import ParseMode
+from aiogram.exceptions import TelegramBadRequest
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
@@ -121,7 +122,7 @@ async def voice_message_start(message: Message, bot: Bot, state: FSMContext):
 #_______________________
 
 @router.callback_query(F.data == "add_descriptions")
-async def add_descriptions(callback: CallbackQuery):
+async def add_descriptions(callback: CallbackQuery, bot: Bot):
     user_id = callback.from_user.id
     logger = get_user_logger(user_id)
     logger.info("add_descriptions start...")
@@ -142,8 +143,6 @@ async def add_descriptions(callback: CallbackQuery):
         await callback.anwser("Ошибка получения описаний...")
         logger.error("error getting descriptions...")
         return
-
-    await callback.answer()
 
     try:
         full_books_data = await write_book_blurbs(current_books, current_user_request, user_id)
@@ -172,7 +171,15 @@ async def add_descriptions(callback: CallbackQuery):
 
         ans_text += "\n➖➖➖➖➖\n" if i < len(full_books_data) - 1 else ""
 
-    await callback.message.edit_text(ans_text, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+    try:
+        try:
+            await callback.answer()
+        except TelegramBadRequest:
+            pass
+
+        await callback.message.edit_text(ans_text, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+    except TelegramBadRequest:
+        await bot.send_message(user_id, ans_text, disable_web_page_preview=True, parse_mode=ParseMode.HTML)
 
     logger.info("add_descriptions end...")
 #_______________________

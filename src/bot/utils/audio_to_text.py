@@ -3,10 +3,11 @@ import os
 from aiogram import Bot
 from pydub import AudioSegment
 import speech_recognition as sr
+from bot.definitions import FFMPEG_PATH
 
 from bot import errors
 
-AudioSegment.converter = r"C:\ProgramData\chocolatey\lib\ffmpeg\tools\ffmpeg\bin\ffmpeg.exe"
+AudioSegment.converter = FFMPEG_PATH
 
 async def audio_to_text(bot: Bot, file_id: str) -> str:
     """
